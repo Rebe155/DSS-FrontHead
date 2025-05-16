@@ -1,0 +1,253 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #FFFFFF;
+}
+
+.header {
+  height: 70px;
+  width: 100%;
+  background-color: #B297F1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  padding: 0 15px;
+  height: 40px;
+  flex: 1;
+  max-width: 500px;
+}
+
+.searchIcon {
+  color: #FFFFFF;
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.searchInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-size: 1rem;
+}
+
+.searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.menuButton {
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.menuOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.menuContainer {
+  width: 60%;
+  max-width: 250px;
+  background-color: #FFFFFF;
+  margin-top: 70px;
+  padding: 15px 0;
+  border-radius: 10px 0 0 10px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.menuContainer button {
+  width: 100%;
+  padding: 15px 20px;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #052659;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.menuContainer button:hover {
+  background-color: #F5F5F5;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #052659;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profileSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.profileImage {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+  border: 3px solid #B297F1;
+}
+
+.changePhotoBtn {
+  background-color: #B297F1;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 20px;
+  padding: 8px 15px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.changePhotoBtn:hover {
+  background-color: #9D7DE0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #052659;
+}
+
+.input, .textarea, select {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: #F5F5F5;
+  transition: border-color 0.2s;
+}
+
+.input:focus, .textarea:focus, select:focus {
+  outline: none;
+  border-color: #B297F1;
+}
+
+.textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.saveButton {
+  background-color: #B297F1;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.2s;
+}
+
+.saveButton:hover {
+  background-color: #9D7DE0;
+}
+
+.navBar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 70px;
+  background-color: #FFFFFF;
+  border-top: 1px solid #EEE;
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+}
+
+.navButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  color: #B297F1;
+  cursor: pointer;
+  padding: 8px;
+  font-size: 0.8rem;
+}
+
+.navButton span {
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 15px;
+  }
+  
+  .menuContainer {
+    width: 70%;
+  }
+  
+  .mainContent {
+    padding: 15px;
+  }
+  
+  .profileImage {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    height: 60px;
+  }
+  
+  .searchContainer {
+    height: 35px;
+  }
+  
+  .title {
+    font-size: 1.3rem;
+  }
+}

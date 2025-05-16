@@ -1,0 +1,251 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #FFFFFF;
+}
+
+.header {
+  height: 70px;
+  width: 100%;
+  background-color: #B297F1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.searchContainer {
+  display: flex;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 25px;
+  padding: 0 15px;
+  height: 40px;
+  flex: 1;
+  max-width: 500px;
+}
+
+.searchIcon {
+  color: #FFFFFF;
+  margin-right: 10px;
+  font-size: 1.2rem;
+}
+
+.searchInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: #FFFFFF;
+  font-size: 1rem;
+}
+
+.searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.menuButton {
+  background: none;
+  border: none;
+  color: #FFFFFF;
+  font-size: 1.5rem;
+  margin-left: 15px;
+  cursor: pointer;
+}
+
+.menuOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.menuContainer {
+  width: 60%;
+  max-width: 250px;
+  background-color: #FFFFFF;
+  margin-top: 70px;
+  padding: 15px 0;
+  border-radius: 10px 0 0 10px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.menuContainer button {
+  width: 100%;
+  padding: 15px 20px;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #052659;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.menuContainer button:hover {
+  background-color: #F5F5F5;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.mainContent h2 {
+  font-size: 1.3rem;
+  color: #052659;
+  margin: 25px 0 15px;
+  padding-left: 10px;
+}
+
+.coursesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.courseCard {
+  background-color: #FFFFFF;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.courseCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.courseIcon {
+  font-size: 2rem;
+  color: #6200EE;
+  margin-right: 15px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F0E6FF;
+  border-radius: 10px;
+}
+
+.courseInfo {
+  flex: 1;
+}
+
+.courseInfo h3 {
+  font-size: 1.1rem;
+  color: #052659;
+  margin-bottom: 5px;
+}
+
+.status {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.inProgress {
+  background-color: #E8F4FF;
+  color: #1A73E8;
+}
+
+.completed {
+  background-color: #E8F5E9;
+  color: #34A853;
+}
+
+.notStarted {
+  background-color: #F5F5F5;
+  color: #666;
+}
+
+.navBar {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 70px;
+  background-color: #FFFFFF;
+  border-top: 1px solid #EEE;
+  position: sticky;
+  bottom: 0;
+  z-index: 100;
+}
+
+.navButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  color: #B297F1;
+  cursor: pointer;
+  padding: 8px;
+  font-size: 0.8rem;
+}
+
+.navButton span {
+  margin-top: 4px;
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding: 0 15px;
+  }
+  
+  .menuContainer {
+    width: 70%;
+  }
+  
+  .mainContent {
+    padding: 15px;
+  }
+  
+  .coursesGrid {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    height: 60px;
+  }
+  
+  .searchContainer {
+    height: 35px;
+  }
+  
+  .coursesGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .courseCard {
+    padding: 15px;
+  }
+  
+  .courseIcon {
+    font-size: 1.8rem;
+    width: 45px;
+    height: 45px;
+    margin-right: 12px;
+  }
+}
