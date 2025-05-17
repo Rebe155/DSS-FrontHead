@@ -19,38 +19,45 @@ const HomePage = () => {
 
   return (
     <div className={styles.fullScreenWrapper}>
-      <div className={styles.headerSection}>
-        <GlobalHeader
-          username="Usuario"
-          avatarSrc={userAvatar}
-          onMenuClick={toggleMenu}
-        />
-      </div>
+      <GlobalHeader
+        username="Usuario"
+        avatarSrc={userAvatar}
+        onMenuClick={toggleMenu}
+      />
 
       {isMenuOpen && (
         <div
           className={styles.menuOverlay}
           onClick={() => setIsMenuOpen(false)}
         >
-          <div className={styles.menuContainer}>
-            {["Cursos", "Inicio", "Perfil", "Ayuda"].map((item) => {
-              const pathMap = {
-                Cursos: "/app/courses",
-                Inicio: "/app/home",
-                Perfil: "/app/profile",
-                Ayuda: "/app/help",
-              };
-
-              return (
-                <button
-                  key={item}
-                  onClick={() => navigateTo(pathMap[item])}
-                  className={styles.menuItem}
-                >
-                  {item}
-                </button>
-              );
-            })}
+          <div
+            className={styles.menuContainer}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => navigateTo("/courses")}
+              className={styles.menuItem}
+            >
+              Cursos
+            </button>
+            <button
+              onClick={() => navigateTo("/home")}
+              className={styles.menuItem}
+            >
+              Inicio
+            </button>
+            <button
+              onClick={() => navigateTo("/profile")}
+              className={styles.menuItem}
+            >
+              Perfil
+            </button>
+            <button
+              onClick={() => navigateTo("/help")}
+              className={styles.menuItem}
+            >
+              Ayuda
+            </button>
           </div>
         </div>
       )}

@@ -18,7 +18,7 @@ const IntroPythonCourse = () => {
   };
 
   return (
-    <>
+    <div className={styles.fullScreenWrapper}>
       <GlobalHeader
         onMenuClick={toggleMenu}
         isSecondHeader={true}
@@ -89,7 +89,7 @@ const IntroPythonCourse = () => {
           <button className={styles.learnButton}>Aprender</button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

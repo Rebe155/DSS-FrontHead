@@ -1,44 +1,92 @@
 import React, { useState } from "react";
 import styles from "./Exercise.module.css";
+import { useNavigate } from "react-router-dom";
 import GlobalHeader from "../../../components/ui/GlobalHeader";
 import robotImage from "@assets/images/avatar-password.png";
 
 const ExercisePythonCourse = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
   const [blocks, setBlocks] = useState([
     { id: 1, content: "edad = 20" },
     { id: 2, content: 'print("Mayor de edad")' },
     { id: 3, content: "if edad = 18:" },
   ]);
 
-  // Función para manejar el arrastre (drag)
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const navigateTo = (path) => {
+    navigate(path);
+    setIsMenuOpen(false);
+  };
+
   const handleDragStart = (e, index) => {
     e.dataTransfer.setData("text/plain", index);
   };
 
-  // Función para permitir el "drop" sobre el área de drop
   const handleDragOver = (e) => {
     e.preventDefault();
   };
 
-  // Función para manejar el "drop"
   const handleDrop = (e, targetIndex) => {
     e.preventDefault();
     const sourceIndex = e.dataTransfer.getData("text/plain");
-    if (sourceIndex === targetIndex) return; // Si es el mismo índice, no hacer nada
+    if (sourceIndex === targetIndex) return;
 
     const newBlocks = [...blocks];
-    const [movedBlock] = newBlocks.splice(sourceIndex, 1); // Elimina el bloque arrastrado
-    newBlocks.splice(targetIndex, 0, movedBlock); // Inserta el bloque en la nueva posición
+    const [movedBlock] = newBlocks.splice(sourceIndex, 1);
+    newBlocks.splice(targetIndex, 0, movedBlock);
 
-    setBlocks(newBlocks); // Actualiza el estado con la nueva posición de los bloques
+    setBlocks(newBlocks);
   };
 
   return (
-    <>
+    <div className={styles.fullScreenWrapper}>
       <GlobalHeader
         title="Ejercicios de Programación con Python"
+        onMenuClick={toggleMenu}
         isSecondHeader={true}
       />
+
+      {isMenuOpen && (
+        <div
+          className={styles.menuOverlay}
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <div
+            className={styles.menuContainer}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => navigateTo("/courses")}
+              className={styles.menuItem}
+            >
+              Cursos
+            </button>
+            <button
+              onClick={() => navigateTo("/home")}
+              className={styles.menuItem}
+            >
+              Inicio
+            </button>
+            <button
+              onClick={() => navigateTo("/profile")}
+              className={styles.menuItem}
+            >
+              Perfil
+            </button>
+            <button
+              onClick={() => navigateTo("/help")}
+              className={styles.menuItem}
+            >
+              Ayuda
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className={styles.mainContent}>
         <div className={styles.leftColumn}>
           <h2 className={styles.exerciseTitle}>
@@ -52,14 +100,12 @@ const ExercisePythonCourse = () => {
             </span>
           </p>
 
-          {/* Ejercicio 1: Escribir código */}
           <div className={styles.exerciseItem}>
             <p className={styles.question}>
               1. Escribir un programa que almacene la cadena ¡Hola Mundo! en una
               variable y luego muestre por pantalla el contenido de la variable:
             </p>
             <div className={styles.inputBox}>
-              {/* Aquí el usuario deberá escribir el código */}
               <textarea
                 placeholder='variable = "Hola Mundo!"&#10;print(variable)'
                 rows={4}
@@ -68,7 +114,6 @@ const ExercisePythonCourse = () => {
             </div>
           </div>
 
-          {/* Ejercicio 2: Completar código */}
           <div className={styles.exerciseItem}>
             <p className={styles.question}>
               2. Completa el código para imprimir "Mayor de edad" si la edad es
@@ -99,12 +144,6 @@ const ExercisePythonCourse = () => {
         </div>
 
         <div className={styles.rightColumn}>
-          {/* Ejercicio 3: Arrastrar bloques */}
-          <h2
-            className={styles.exerciseTitle}
-            style={{ marginTop: 0 }}
-          ></h2>{" "}
-          {/* Empty title to occupy space if needed */}
           <div className={styles.exerciseItem}>
             <p className={styles.question}>
               3. Arrastra los bloques en orden para imprimir "Mayor de edad" si
@@ -132,7 +171,7 @@ const ExercisePythonCourse = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

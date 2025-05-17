@@ -1,15 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Exercise.module.css";
+import { useNavigate } from "react-router-dom";
 import GlobalHeader from "../../../components/ui/GlobalHeader";
 import robotImage from "@assets/images/avatar-password.png";
 
 const ExerciseJavaCourse = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const navigateTo = (path) => {
+    navigate(path);
+    setIsMenuOpen(false);
+  };
+
   return (
-    <>
+    <div className={styles.fullScreenWrapper}>
       <GlobalHeader
         title="Ejercicios de Programación con Java"
+        onMenuClick={toggleMenu}
         isSecondHeader={true}
       />
+
+      {isMenuOpen && (
+        <div
+          className={styles.menuOverlay}
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <div
+            className={styles.menuContainer}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => navigateTo("/courses")}
+              className={styles.menuItem}
+            >
+              Cursos
+            </button>
+            <button
+              onClick={() => navigateTo("/home")}
+              className={styles.menuItem}
+            >
+              Inicio
+            </button>
+            <button
+              onClick={() => navigateTo("/profile")}
+              className={styles.menuItem}
+            >
+              Perfil
+            </button>
+            <button
+              onClick={() => navigateTo("/help")}
+              className={styles.menuItem}
+            >
+              Ayuda
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className={styles.mainContent}>
         <div className={styles.leftColumn}>
           <h2 className={styles.exerciseTitle}>
@@ -22,7 +74,7 @@ const ExerciseJavaCourse = () => {
               🚀
             </span>
           </p>
-          {/* Ejercicio 1: Verdadero o Falso */}
+
           <div className={styles.exerciseItem}>
             <p className={styles.question}>
               1. ¿Es correcta la declaración del método main?
@@ -31,9 +83,7 @@ const ExerciseJavaCourse = () => {
               <pre>
                 {`public class Main {
   public static void main(String[] args) {
-    System.out.println("Hola Mundo");
-  }
-}`}
+    System.out.println("Hola Mundo");} }`}
               </pre>
             </div>
             <div style={{ display: "flex", gap: "1rem", marginTop: "1rem" }}>
@@ -44,7 +94,6 @@ const ExerciseJavaCourse = () => {
             </div>
           </div>
 
-          {/* Ejercicio 2: Encontrar y corregir el error */}
           <div className={styles.exerciseItem}>
             <p className={styles.question}>
               2. Encuentra y corrige el error en el siguiente código.
@@ -55,8 +104,7 @@ const ExerciseJavaCourse = () => {
     public static void main(String[] args) {  
         double precio = 19.99;  
         int precioEntero = precio;  
-        System.out.println(precioEntero);  
-  }
+        System.out.println(precioEntero);  }
 }`}
               </pre>
             </div>
@@ -64,7 +112,6 @@ const ExerciseJavaCourse = () => {
         </div>
 
         <div className={styles.rightColumn}>
-          {/* Ejercicio 2: Entrada para corregir código */}
           <div className={styles.exerciseItem}>
             <div className={styles.inputBox}>
               <textarea
@@ -75,7 +122,6 @@ const ExerciseJavaCourse = () => {
             </div>
           </div>
 
-          {/* Ejercicio 3: Escribir un programa */}
           <div className={styles.exerciseItem}>
             <p className={styles.question}>
               3. Escribe un programa que imprima los números del 1 al 5 usando
@@ -100,15 +146,12 @@ const ExerciseJavaCourse = () => {
             </button>
           </div>
 
-          {/* Puedes decidir si quieres incluir la imagen del robot aquí */}
-          {
-            <div className={styles.robotContainer}>
-              <img src={robotImage} alt="Robot" className={styles.robot} />
-            </div>
-          }
+          <div className={styles.robotContainer}>
+            <img src={robotImage} alt="Robot" className={styles.robot} />
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

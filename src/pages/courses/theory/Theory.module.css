@@ -1,11 +1,16 @@
-/* Theory.module.css */
-
-/* Estilos generales del cuerpo (si no están ya definidos globalmente) */
-/* body {
+/* Estructura principal en pantalla completa */
+.fullScreenWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(to bottom, #f5f7fa 0%, #e4e8eb 100%);
-  margin: 0;
-  font-family: "Arial", sans-serif;
-} */
+  overflow: auto;
+  z-index: 1;
+}
 
 /* ========== Menú Lateral ========== */
 .menuOverlay {
@@ -54,7 +59,7 @@
   padding: 2rem;
   gap: 2rem;
   box-sizing: border-box;
-  position: relative; /* Añadimos esta línea para manejar el posicionamiento del botón */
+  position: relative;
 }
 
 .leftColumn,
@@ -73,7 +78,7 @@
 .rightColumn {
   align-items: flex-start;
   justify-content: flex-start;
-  position: relative; /* Necesario para posicionar el logo */
+  position: relative;
 }
 
 .description {
@@ -111,7 +116,7 @@
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease;
-  position: absolute; /* Posiciona el botón en la parte inferior */
+  position: absolute;
   bottom: 1.5rem;
   left: 50%;
   transform: translateX(-50%);
@@ -130,20 +135,20 @@
 
 .logoTopRight {
   display: flex;
-  justify-content: flex-end; /* Alinea el logo a la derecha */
-  width: 100%; /* Ocupa todo el ancho de la columna */
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .smallLogo {
-  width: 80px; /* Tamaño más pequeño para el logo */
+  width: 80px;
   height: auto;
 }
 
 .robotContainer {
   display: flex;
-  justify-content: flex-end; /* Alinea el robot a la derecha */
+  justify-content: flex-end;
   width: 100%;
-  margin-top: 1rem; /* Espacio entre el texto y el robot */
+  margin-top: 1rem;
 }
 
 .robot {
@@ -156,56 +161,97 @@
 @media (max-width: 768px) {
   .mainContent {
     flex-direction: column;
-    padding: 1.5rem;
-    gap: 1.5rem;
+    padding: 1rem;
   }
 
   .leftColumn,
   .rightColumn {
+    flex: 1;
+    width: 100%;
     align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 2rem;
+  }
+
+  .description {
+    font-size: 1rem;
+    padding: 0 1rem;
     text-align: center;
   }
 
-  .logoTopRight {
-    justify-content: center; /* Centra el logo en pantallas pequeñas */
+  .subtitle {
+    font-size: 1.1rem;
+    text-align: center;
   }
 
-  .learnButton {
-    align-self: center;
-  }
-
-  .robotContainer {
-    justify-content: center; /* Centra el robot en pantallas pequeñas */
-  }
-}
-
-@media (max-width: 480px) {
-  .mainContent {
-    padding: 1rem;
-    gap: 1rem;
+  .textContent {
+    font-size: 1rem;
+    text-align: center;
   }
 
   .smallLogo {
     width: 60px;
   }
 
-  .subtitle {
-    font-size: 1.2rem;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .description,
-  .textContent {
-    font-size: 0.9rem;
-  }
-
   .learnButton {
-    font-size: 0.9rem;
-    padding: 0.6rem 1.5rem;
+    width: 80%;
+    max-width: 300px;
+    padding: 1rem 0;
+    font-size: 1rem;
+    bottom: 1rem;
   }
 
   .robot {
     width: 80px;
+  }
+
+  .robotContainer {
+    justify-content: center;
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainContent {
+    padding: 0.5rem;
+  }
+
+  .leftColumn,
+  .rightColumn {
+    flex: 1;
+    width: 100%;
+    margin-bottom: 1.5rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .subtitle {
+    font-size: 1.1rem;
+    text-align: center;
+  }
+
+  .textContent {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .learnButton {
+    width: 80%;
+    max-width: 250px;
+    padding: 1rem 0;
+    font-size: 0.9rem;
+    bottom: 0.5rem;
+  }
+
+  .robotContainer {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .robot {
+    width: 60px;
   }
 }

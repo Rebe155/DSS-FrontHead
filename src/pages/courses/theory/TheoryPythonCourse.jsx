@@ -19,7 +19,7 @@ const TheoryPythonCourse = () => {
   };
 
   return (
-    <>
+    <div className={styles.fullScreenWrapper}>
       <GlobalHeader
         onMenuClick={toggleMenu}
         isSecondHeader={true}
@@ -120,7 +120,7 @@ const TheoryPythonCourse = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

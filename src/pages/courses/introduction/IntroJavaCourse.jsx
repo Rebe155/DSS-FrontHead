@@ -18,7 +18,7 @@ const IntroJavaCourse = () => {
   };
 
   return (
-    <>
+    <div className={styles.fullScreenWrapper}>
       <GlobalHeader
         onMenuClick={toggleMenu}
         isSecondHeader={true}
@@ -89,7 +89,7 @@ const IntroJavaCourse = () => {
           <button className={styles.learnButton}>Aprender</button>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

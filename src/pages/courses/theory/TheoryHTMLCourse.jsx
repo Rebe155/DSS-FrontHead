@@ -19,7 +19,7 @@ const TheoryHTMLCourse = () => {
   };
 
   return (
-    <>
+    <div className={styles.fullScreenWrapper}>
       <GlobalHeader
         onMenuClick={toggleMenu}
         isSecondHeader={true}
@@ -144,7 +144,7 @@ const TheoryHTMLCourse = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

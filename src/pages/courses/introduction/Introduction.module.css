@@ -1,8 +1,15 @@
-/* Fondo para el contenedor principal */
-body {
+/* Estructura principal en pantalla completa */
+.fullScreenWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   background: linear-gradient(to bottom, #f5f7fa 0%, #e4e8eb 100%);
-  margin: 0;
-  font-family: "Arial", sans-serif;
+  overflow: auto;
+  z-index: 1;
 }
 
 /* ========== Menú Lateral ========== */
@@ -64,13 +71,13 @@ body {
 }
 
 .Logo {
-  width: 250px;
-  max-width: 100%;
+  width: 220px;
+  max-width: 50%;
   object-fit: contain;
 }
 
 .rightColumn {
-  flex: 1.2;
+  flex: 3;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -136,59 +143,74 @@ body {
 
 /* ========== Responsivo ========== */
 
+/* Pantallas pequeñas (móviles) */
 @media (max-width: 768px) {
   .mainContent {
     flex-direction: column;
-    padding: 1.5rem;
-    gap: 2rem;
+    padding: 1rem;
   }
 
-  .pythonLogo {
+  .leftColumn,
+  .rightColumn {
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .Logo {
     width: 180px;
+    max-width: 60%;
   }
 
   .description {
     font-size: 1rem;
+    padding: 0 0.5rem;
   }
 
   .detailsContainer {
     gap: 1rem;
+    justify-content: space-evenly;
   }
 
   .detailBox {
     width: 120px;
+    padding: 0.75rem;
+  }
+
+  .learnButton {
+    padding: 0.5rem 1.5rem;
+    font-size: 0.9rem;
   }
 }
 
+/* Pantallas muy pequeñas (teléfonos en modo retrato) */
 @media (max-width: 480px) {
   .mainContent {
-    padding: 1rem;
-    gap: 1.5rem;
+    padding: 0.5rem;
   }
 
-  .pythonLogo {
-    width: 150px;
+  .Logo {
+    width: 160px;
+    max-width: 70%;
   }
 
   .description {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
+    padding: 0 0.25rem;
+  }
+
+  .detailsContainer {
+    gap: 0.5rem;
+    justify-content: center;
   }
 
   .detailBox {
     width: 100px;
-    padding: 0.75rem;
-  }
-
-  .detailBox strong {
-    font-size: 1.1rem;
-  }
-
-  .detailBox span {
-    font-size: 0.85rem;
+    padding: 0.5rem;
   }
 
   .learnButton {
-    font-size: 0.95rem;
-    padding: 0.6rem 1.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
   }
 }

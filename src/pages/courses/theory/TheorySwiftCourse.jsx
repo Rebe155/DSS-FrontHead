@@ -19,7 +19,7 @@ const TheorySwiftCourse = () => {
   };
 
   return (
-    <>
+    <div className={styles.fullScreenWrapper}>
       <GlobalHeader
         onMenuClick={toggleMenu}
         isSecondHeader={true}
@@ -146,7 +146,7 @@ const TheorySwiftCourse = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

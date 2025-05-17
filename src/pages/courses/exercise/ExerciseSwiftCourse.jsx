@@ -1,9 +1,22 @@
 import React, { useState } from "react";
-import styles from "./Exercise.module.css"; // Asegúrate de que la ruta al CSS es correcta
+import styles from "./Exercise.module.css";
+import { useNavigate } from "react-router-dom";
 import GlobalHeader from "../../../components/ui/GlobalHeader";
-import robotImage from "@assets/images/avatar-password.png"; // Puedes reutilizar la imagen si quieres
+import robotImage from "@assets/images/avatar-password.png";
 
 const ExerciseSwiftCourse = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const navigateTo = (path) => {
+    navigate(path);
+    setIsMenuOpen(false);
+  };
+
   const [draggableBlocks] = useState([
     { id: 1, content: "for numero in 1...5" },
     { id: 2, content: 'print("Mayor de edad")' },
@@ -34,8 +47,50 @@ const ExerciseSwiftCourse = () => {
   };
 
   return (
-    <>
-      <GlobalHeader title="Ejercicios básicos en SWIFT" isSecondHeader={true} />
+    <div className={styles.fullScreenWrapper}>
+      <GlobalHeader
+        onMenuClick={toggleMenu}
+        isSecondHeader={true}
+        title="Ejercicios básicos en SWIFT"
+      />
+
+      {isMenuOpen && (
+        <div
+          className={styles.menuOverlay}
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <div
+            className={styles.menuContainer}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => navigateTo("/courses")}
+              className={styles.menuItem}
+            >
+              Cursos
+            </button>
+            <button
+              onClick={() => navigateTo("/home")}
+              className={styles.menuItem}
+            >
+              Inicio
+            </button>
+            <button
+              onClick={() => navigateTo("/profile")}
+              className={styles.menuItem}
+            >
+              Perfil
+            </button>
+            <button
+              onClick={() => navigateTo("/help")}
+              className={styles.menuItem}
+            >
+              Ayuda
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className={styles.mainContent}>
         <div className={styles.leftColumn}>
           <h2 className={styles.exerciseTitle}>
@@ -157,13 +212,13 @@ for numero in numeros {
             </button>
           </div>
 
-          {/* Imagen del robot (sin cambios) */}
+          {/* Imagen del robot  */}
           <div className={styles.robotContainer}>
             <img src={robotImage} alt="Robot" className={styles.robot} />
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
