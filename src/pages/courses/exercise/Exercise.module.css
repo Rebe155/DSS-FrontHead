@@ -1,0 +1,275 @@
+/* ========== Contenedor Principal ========== */
+.mainContent {
+  display: flex;
+  flex-direction: row;
+  padding: 2rem;
+  gap: 2rem;
+  box-sizing: border-box;
+  position: relative; /* Para posicionar elementos absolutos dentro */
+  min-height: 80vh; /* Asegura una altura mínima */
+}
+
+* {
+  color: #000000 !important;
+}
+
+.leftColumn,
+.rightColumn {
+  flex: 1;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff; /* Fondo blanco para las columnas */
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.leftColumn {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.rightColumn {
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative; /* Para posicionar el robot */
+}
+
+/* ========== Textos y Títulos ========== */
+.exerciseTitle {
+  font-size: 1.6rem;
+  color: #000000; /* Texto negro */
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  text-align: left;
+}
+
+.question {
+  font-size: 1.1rem;
+  color: #000000; /* Texto negro */
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  font-weight: bold;
+}
+
+.optionsList {
+  list-style-type: none;
+  padding: 0;
+  margin-bottom: 1.5rem;
+}
+
+.optionItem {
+  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid #bdc3c7; /* Borde gris claro */
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.optionItem:hover {
+  background-color: #f0f0f0; /* Gris muy claro al pasar el ratón */
+}
+
+.explanation {
+  font-size: 1rem;
+  color: #000000; /* Texto negro */
+  line-height: 1.6;
+  margin-bottom: 1rem;
+  text-align: left;
+}
+/* Estilo para el texto en el párrafo de descripción */
+.description {
+  color: #000000; /* Establece el color del texto en negro */
+  font-size: 1.1rem; /* Asegura que tenga un tamaño de texto adecuado */
+  line-height: 1.6;
+}
+
+/* ========== Campos de Entrada ========== */
+.inputBox textarea {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-family: monospace; /* Para simular un editor de código */
+  font-size: 1rem;
+  box-sizing: border-box;
+  background-color: #ffffff; /* Fondo blanco */
+  color: #000000; /* Texto negro */
+}
+
+.inlineInput {
+  border: none;
+  border-bottom: 1px dashed #555;
+  padding: 0.2rem 0.5rem;
+  margin: 0 0.2rem;
+  font-family: monospace;
+  font-size: 1rem;
+  width: auto; /* Ajusta el ancho al contenido */
+  background-color: transparent; /* Fondo transparente */
+  color: #000000; /* Texto negro */
+}
+
+/* ========== Bloques Arrastrables (Visual) ========== */
+
+.draggableBlock {
+  background-color: #f2f2f2;
+  border: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  cursor: grab;
+  display: inline-block;
+  margin-right: 0.5rem;
+  color: #000000;
+}
+
+.dragAndDropArea {
+  margin-top: 0.5rem;
+  padding: 1rem;
+  border: 2px dashed #ddd;
+  border-radius: 4px;
+}
+
+/* ========== Botones ========== */
+.checkButton {
+  background: #27ae60; /* Verde para "Comprobar" */
+  color: #fff;
+  border: none;
+  padding: 0.8rem 2.2rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.checkButton:hover {
+  transform: scale(1.05);
+  background: #2ecc71; /* Un tono de verde más claro al pasar el ratón */
+}
+
+.nextButton {
+  background: #3498db; /* Azul para "Siguiente" */
+  color: #fff;
+  border: none;
+  padding: 0.8rem 2.2rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  margin-top: 1rem; /* Espacio entre botones si hay varios */
+}
+
+.nextButton:hover {
+  transform: scale(1.05);
+  background: #2980b9; /* Un tono de azul más oscuro al pasar el ratón */
+}
+
+/* ========== Robot ========== */
+.robotContainer {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.robot {
+  width: 90px;
+  height: auto;
+}
+
+/* Botón para Verdadero - color verde */
+.optionButtonVerdadero {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
+/* Botón para Falso - color rojo */
+.optionButtonFalso {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 5px;
+}
+
+.optionButtonVerdadero:hover,
+.optionButtonFalso:hover {
+  opacity: 0.8; /* Para un efecto de hover más suave */
+}
+
+/* ========== Estilos Responsivos ========== */
+@media (max-width: 768px) {
+  .mainContent {
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .leftColumn,
+  .rightColumn {
+    align-items: center;
+    text-align: center;
+  }
+
+  .robotContainer {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainContent {
+    padding: 1rem;
+    gap: 1rem;
+  }
+
+  .exerciseTitle {
+    font-size: 1.4rem;
+  }
+
+  .question {
+    font-size: 1rem;
+  }
+
+  .robot {
+    width: 70px;
+  }
+}
+
+/* Exercise.module.css */
+/* ... otros estilos ... */
+
+.dropTarget {
+  display: inline-block;
+  min-width: 80px; /* Ajusta según necesites */
+  padding: 0.2rem 0.5rem;
+  margin: 0 0.2rem;
+  border-bottom: 1px dashed #555;
+  font-family: monospace;
+  font-size: 1rem;
+  text-align: center;
+  transition: background-color 0.3s ease; /* Para una transición suave del color */
+}
+
+.dropTarget:empty::before {
+  content: "_______"; /* Para asegurar que el espacio ocupe espacio inicialmente */
+  color: lightgray; /* Ocultar el texto guía si lo prefieres */
+}
+
+.filled {
+  background-color: #e0f7fa; /* Un color celeste claro como ejemplo */
+  border-bottom: none; /* Opcional: quitar el borde punteado al llenarse */
+}

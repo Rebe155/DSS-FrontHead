@@ -1,0 +1,194 @@
+/* Fondo para el contenedor principal */
+body {
+  background: linear-gradient(to bottom, #f5f7fa 0%, #e4e8eb 100%);
+  margin: 0;
+  font-family: "Arial", sans-serif;
+}
+
+/* ========== Menú Lateral ========== */
+.menuOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.menuContainer {
+  width: 60%;
+  max-width: 250px;
+  background-color: #ffffff;
+  margin-top: 70px;
+  padding: 15px 0;
+  border-radius: 10px 0 0 10px;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.menuContainer button {
+  width: 100%;
+  padding: 15px 20px;
+  text-align: left;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: #052659;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.menuContainer button:hover {
+  background-color: #f5f5f5;
+}
+
+/* Estilos principales */
+.mainContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+  width: 100%;
+  flex: 1;
+  box-sizing: border-box;
+}
+
+.leftColumn {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Logo {
+  width: 250px;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+.rightColumn {
+  flex: 1.2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.description {
+  font-size: 1.1rem;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  padding: 0 1rem;
+}
+
+.detailsContainer {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.detailBox {
+  background-color: #f4f0f5;
+  border: 1px solid #dcd2e9;
+  border-radius: 12px;
+  padding: 1rem;
+  width: 140px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+
+.detailBox strong {
+  display: block;
+  font-size: 1.3rem;
+  color: #1a1a1a;
+  margin-bottom: 0.25rem;
+}
+
+.detailBox span {
+  font-size: 0.95rem;
+  color: #666;
+}
+
+.learnButton {
+  background: linear-gradient(to right, #a0e9fd, #c58af9);
+  color: #fff;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+  align-self: center;
+}
+
+.learnButton:hover {
+  transform: scale(1.05);
+}
+
+/* ========== Responsivo ========== */
+
+@media (max-width: 768px) {
+  .mainContent {
+    flex-direction: column;
+    padding: 1.5rem;
+    gap: 2rem;
+  }
+
+  .pythonLogo {
+    width: 180px;
+  }
+
+  .description {
+    font-size: 1rem;
+  }
+
+  .detailsContainer {
+    gap: 1rem;
+  }
+
+  .detailBox {
+    width: 120px;
+  }
+}
+
+@media (max-width: 480px) {
+  .mainContent {
+    padding: 1rem;
+    gap: 1.5rem;
+  }
+
+  .pythonLogo {
+    width: 150px;
+  }
+
+  .description {
+    font-size: 0.95rem;
+  }
+
+  .detailBox {
+    width: 100px;
+    padding: 0.75rem;
+  }
+
+  .detailBox strong {
+    font-size: 1.1rem;
+  }
+
+  .detailBox span {
+    font-size: 0.85rem;
+  }
+
+  .learnButton {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.5rem;
+  }
+}
