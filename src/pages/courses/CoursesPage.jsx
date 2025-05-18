@@ -3,16 +3,42 @@ import { useNavigate } from "react-router-dom";
 import styles from "./CoursesPage.module.css";
 import Icon from "@components/ui/Icon";
 import GlobalHeader from "../../components/ui/GlobalHeader";
-import { FaBook, FaHome, FaUser, FaQuestionCircle, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaBook,
+  FaHome,
+  FaUser,
+  FaQuestionCircle,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import userAvatar from "@assets/images/avatar.png"; // Asegúrate de importar el avatar
 import IntroHTMLCourse from "./introduction/IntroHTMLCourse";
 
 const coursesData = {
   recommended: [
-    { id: "1", title: "Python", image: "/src/assets/images/pythonf.png", progress: "Por Comenzar" },
-    { id: "2", title: "Java", image: "/src/assets/images/java.png", progress: "Por Comenzar" },
-    { id: "3", title: "HTML", image: "/src/assets/images/html.png", progress: "Completado" },
-    { id: "4", title: "Swift", image: "/src/assets/images/swift.png", progress: "Por Comenzar" },
+    {
+      id: "1",
+      title: "Python",
+      image: "/src/assets/images/pythonf.png",
+      progress: "Por Comenzar",
+    },
+    {
+      id: "2",
+      title: "Java",
+      image: "/src/assets/images/java.png",
+      progress: "Por Comenzar",
+    },
+    {
+      id: "3",
+      title: "HTML",
+      image: "/src/assets/images/html.png",
+      progress: "Completado",
+    },
+    {
+      id: "4",
+      title: "Swift",
+      image: "/src/assets/images/swift.png",
+      progress: "Por Comenzar",
+    },
   ],
   recent: [
     {
@@ -40,6 +66,32 @@ const coursesData = {
       progress: "Por Comenzar",
     },
   ],
+};
+const actualizarEstadoCurso = async (courseId, nuevoEstado) => {
+  const userId = localStorage.getItem("userId");
+
+  try {
+    const response = await fetch(
+      "http://localhost/ProgPracticeBackend/actualizar_estado.php",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userId, courseId, nuevoEstado }),
+      }
+    );
+
+    const result = await response.json();
+    if (result.success) {
+      alert("Curso actualizado");
+      // recarga la info
+      window.location.reload(); // o llama a fetchUserData() si prefieres
+    } else {
+      alert("Error: " + result.message);
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Ocurrió un error");
+  }
 };
 
 const CoursesPage = () => {
@@ -86,7 +138,9 @@ const CoursesPage = () => {
       navigate("/app/courses/introduction/swift");
     } else {
       // Ruta genérica si no hay introducción específica
-      navigate(`/app/courses/${courseTitle.toLowerCase().replace(/\s+/g, "-")}`);
+      navigate(
+        `/app/courses/${courseTitle.toLowerCase().replace(/\s+/g, "-")}`
+      );
     }
   };
 
@@ -142,7 +196,11 @@ const CoursesPage = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <div className={styles.menuHeader}>
-              <img src={userAvatar} alt="avatar" className={styles.menuAvatar} />
+              <img
+                src={userAvatar}
+                alt="avatar"
+                className={styles.menuAvatar}
+              />
               <span className={styles.menuUsername}>Menú</span>
             </div>
             <button
@@ -189,20 +247,12 @@ const CoursesPage = () => {
       {showLogoutConfirm && (
         <div className={styles.confirmOverlay}>
           <div className={styles.confirmBox}>
-            <label className={styles.confirmLabel}>
-              ¿Desea cerrar sesión?
-            </label>
+            <label className={styles.confirmLabel}>¿Desea cerrar sesión?</label>
             <div className={styles.confirmButtons}>
-              <button
-                className={styles.confirmYes}
-                onClick={confirmLogout}
-              >
+              <button className={styles.confirmYes} onClick={confirmLogout}>
                 Sí
               </button>
-              <button
-                className={styles.confirmNo}
-                onClick={cancelLogout}
-              >
+              <button className={styles.confirmNo} onClick={cancelLogout}>
                 No
               </button>
             </div>
@@ -254,14 +304,18 @@ const CoursesPage = () => {
       {/* Menú inferior fijo */}
       <nav className={styles.bottomNav}>
         <button
-          className={`${styles.bottomNavItem} ${window.location.pathname === "/app/home" ? styles.active : ""}`}
+          className={`${styles.bottomNavItem} ${
+            window.location.pathname === "/app/home" ? styles.active : ""
+          }`}
           onClick={() => navigate("/app/home")}
         >
           <FaHome style={{ marginBottom: 4 }} />
           <span style={{ fontSize: "0.8rem" }}>Home</span>
         </button>
         <button
-          className={`${styles.bottomNavItem} ${window.location.pathname === "/app/profile" ? styles.active : ""}`}
+          className={`${styles.bottomNavItem} ${
+            window.location.pathname === "/app/profile" ? styles.active : ""
+          }`}
           onClick={() => navigate("/app/profile")}
         >
           <FaUser style={{ marginBottom: 4 }} />

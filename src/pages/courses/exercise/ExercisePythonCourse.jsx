@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import styles from "./Exercise.module.css";
-import { FaBook, FaHome, FaUser, FaQuestionCircle, FaSignOutAlt, FaBars, FaArrowLeft } from "react-icons/fa";
+import {
+  FaBook,
+  FaHome,
+  FaUser,
+  FaQuestionCircle,
+  FaSignOutAlt,
+  FaBars,
+  FaArrowLeft,
+} from "react-icons/fa";
 import userAvatar from "../../../assets/images/avatar.png";
 import robotImage from "@assets/images/avatar-password.png";
 
@@ -16,6 +24,8 @@ const ExercisePythonCourse = () => {
     { id: 2, content: 'print("Mayor de edad")' },
     { id: 3, content: "if edad = 18:" },
   ]);
+
+  const courseId = location.state?.courseId; // Obtener courseId desde el estado
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -62,6 +72,42 @@ const ExercisePythonCourse = () => {
     setBlocks(newBlocks);
   };
 
+  // Marcar el curso como completado
+  const marcarCursoComoCompletado = async () => {
+    const userId = localStorage.getItem("userId"); // Suponiendo que el userId está guardado en localStorage
+    if (!userId || !courseId) {
+      alert("Falta información del usuario o curso.");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        "http://localhost/ProgPracticeBackend/actualizar_estado.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            courseId,
+            nuevoEstado: "Completado",
+          }),
+        }
+      );
+
+      const result = await response.json();
+      if (result.success) {
+        alert("¡Felicidades! Curso marcado como completado.");
+      } else {
+        alert("No se pudo marcar el curso como completado.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("Error al conectar con el servidor.");
+    }
+  };
+
   return (
     <div className={styles.fullScreenWrapper}>
       {/* Header */}
@@ -73,7 +119,9 @@ const ExercisePythonCourse = () => {
         >
           <FaArrowLeft />
         </button>
-        <h2 className={styles.headerTitle}>Ejercicios de Programación con Python</h2>
+        <h2 className={styles.headerTitle}>
+          Ejercicios de Programación con Python
+        </h2>
         <button
           onClick={toggleMenu}
           className={styles.menuButton}
@@ -86,25 +134,47 @@ const ExercisePythonCourse = () => {
       {/* Menú lateral */}
       {isMenuOpen && (
         <div className={styles.menuOverlay} onClick={toggleMenu}>
-          <div className={styles.menuContainer} onClick={e => e.stopPropagation()}>
+          <div
+            className={styles.menuContainer}
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className={styles.menuHeader}>
-              <img src={userAvatar} alt="avatar" className={styles.menuAvatar} />
+              <img
+                src={userAvatar}
+                alt="avatar"
+                className={styles.menuAvatar}
+              />
               <span className={styles.menuUsername}>Menú</span>
             </div>
-            <button onClick={() => navigateTo("/app/home")} className={styles.menuItem}>
+            <button
+              onClick={() => navigateTo("/app/home")}
+              className={styles.menuItem}
+            >
               <FaHome className={styles.menuIcon} /> Inicio
             </button>
-            <button onClick={() => navigateTo("/app/courses")} className={styles.menuItem}>
+            <button
+              onClick={() => navigateTo("/app/courses")}
+              className={styles.menuItem}
+            >
               <FaBook className={styles.menuIcon} /> Cursos
             </button>
-            <button onClick={() => navigateTo("/app/profile")} className={styles.menuItem}>
+            <button
+              onClick={() => navigateTo("/app/profile")}
+              className={styles.menuItem}
+            >
               <FaUser className={styles.menuIcon} /> Perfil
             </button>
-            <button onClick={() => navigateTo("/app/help")} className={styles.menuItem}>
+            <button
+              onClick={() => navigateTo("/app/help")}
+              className={styles.menuItem}
+            >
               <FaQuestionCircle className={styles.menuIcon} /> Ayuda
             </button>
             <hr className={styles.menuDivider} />
-            <button onClick={handleLogout} className={`${styles.menuItem} ${styles.menuLogout}`}>
+            <button
+              onClick={handleLogout}
+              className={`${styles.menuItem} ${styles.menuLogout}`}
+            >
               <FaSignOutAlt className={styles.menuIcon} /> Cerrar sesión
             </button>
           </div>
@@ -115,12 +185,14 @@ const ExercisePythonCourse = () => {
       {showLogoutConfirm && (
         <div className={styles.confirmOverlay}>
           <div className={styles.confirmBox}>
-            <label className={styles.confirmLabel}>
-              ¿Desea cerrar sesión?
-            </label>
+            <label className={styles.confirmLabel}>¿Desea cerrar sesión?</label>
             <div className={styles.confirmButtons}>
-              <button className={styles.confirmYes} onClick={confirmLogout}>Sí</button>
-              <button className={styles.confirmNo} onClick={cancelLogout}>No</button>
+              <button className={styles.confirmYes} onClick={confirmLogout}>
+                Sí
+              </button>
+              <button className={styles.confirmNo} onClick={cancelLogout}>
+                No
+              </button>
             </div>
           </div>
         </div>
@@ -223,7 +295,13 @@ const ExercisePythonCourse = () => {
       <div className={styles.buttonCenter}>
         <button
           className={styles.finishButton}
-          onClick={() => navigate("/app/courses")}
+          onClick={() => {
+            // Llamar a la función para marcar el curso como completado
+            marcarCursoComoCompletado();
+
+            // Redirigir a la página de cursos
+            navigate("/app/courses");
+          }}
         >
           Finalizar curso
         </button>
@@ -232,14 +310,18 @@ const ExercisePythonCourse = () => {
       {/* Menú inferior fijo */}
       <nav className={styles.bottomNav}>
         <button
-          className={`${styles.bottomNavItem} ${location.pathname === "/app/home" ? styles.active : ""}`}
+          className={`${styles.bottomNavItem} ${
+            location.pathname === "/app/home" ? styles.active : ""
+          }`}
           onClick={() => navigate("/app/home")}
         >
           <FaHome style={{ marginBottom: 4 }} />
           <span style={{ fontSize: "0.8rem" }}>Home</span>
         </button>
         <button
-          className={`${styles.bottomNavItem} ${location.pathname === "/app/profile" ? styles.active : ""}`}
+          className={`${styles.bottomNavItem} ${
+            location.pathname === "/app/profile" ? styles.active : ""
+          }`}
           onClick={() => navigate("/app/profile")}
         >
           <FaUser style={{ marginBottom: 4 }} />

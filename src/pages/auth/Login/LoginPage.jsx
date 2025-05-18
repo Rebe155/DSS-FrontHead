@@ -1,62 +1,62 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from './LoginPage.module.css';
-import loginWave from '@assets/images/login-wave.png';
-import loginAvatar from '@assets/images/avatar.png';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "./LoginPage.module.css";
+import loginWave from "@assets/images/login-wave.png";
+import loginAvatar from "@assets/images/avatar.png";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [userError, setUserError] = useState('');
-  const [passError, setPassError] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [userError, setUserError] = useState("");
+  const [passError, setPassError] = useState("");
   const navigate = useNavigate();
 
   const validate = () => {
     let valid = true;
     if (username.trim().length < 5) {
-      setUserError('El usuario debe tener al menos 5 caracteres');
+      setUserError("El usuario debe tener al menos 5 caracteres");
       valid = false;
     } else {
-      setUserError('');
+      setUserError("");
     }
     if (password.length < 6) {
-      setPassError('La contraseña debe tener al menos 6 caracteres');
+      setPassError("La contraseña debe tener al menos 6 caracteres");
       valid = false;
     } else {
-      setPassError('');
+      setPassError("");
     }
     return valid;
   };
 
   const handleLogin = async () => {
-  if (!validate()) return;
+    if (!validate()) return;
 
-  try {
-    const response = await fetch('http://localhost/ProgPracticeBackend/login.php', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password })
-    });
+    try {
+      const response = await fetch(
+        "http://localhost/ProgPracticeBackend/login.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        }
+      );
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (data.success) {
-      // 🔐 Guarda el ID del usuario en localStorage
-      localStorage.setItem("user_id", data.user.id);
-
-      // Puedes guardar más si quieres:
-      localStorage.setItem("username", data.user.username);
-
-      // 🔁 Redirige al Home
-      navigate('/app/home');
-    } else {
-      setUserError(data.message);
+      if (data.success) {
+        localStorage.setItem("userId", data.userId); // ⬅️ aquí se guarda
+        alert("Inicio de sesión exitoso");
+        navigate("/app/home");
+      } else {
+        alert(data.message || "Error al iniciar sesión");
+      }
+    } catch (error) {
+      console.error("Error en la petición:", error);
+      alert("Hubo un problema al conectar con el servidor");
     }
-  } catch (err) {
-    setUserError('Error de conexión');
-  }
-};
-
+  };
 
   return (
     <div className={styles.fullScreenContainer}>
@@ -93,24 +93,23 @@ const LoginPage = () => {
             {passError && <span className={styles.errorMsg}>{passError}</span>}
           </div>
 
-          <button 
-            onClick={handleLogin}
-            className={styles.loginButton}
-          >
+          <button onClick={handleLogin} className={styles.loginButton}>
             <span className={styles.buttonLabel}>Iniciar Sesión</span>
           </button>
         </div>
 
         <div className={styles.extraOptions}>
-          <button 
+          <button
             className={styles.forgotPassword}
-            onClick={() => alert('Función aún no disponible, contacta con soporte')}
+            onClick={() =>
+              alert("Función aún no disponible, contacta con soporte")
+            }
           >
             ¿Olvidaste tu contraseña?
           </button>
-          <button 
+          <button
             className={styles.registerLink}
-            onClick={() => navigate('/app/signup')}
+            onClick={() => navigate("/app/signup")}
           >
             Crear una cuenta nueva
           </button>
