@@ -7,33 +7,29 @@ import loginAvatar from '@assets/images/avatar.png';
 const LoginPage = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [userError, setUserError] = useState('');
+  const [passError, setPassError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = async () => {
-    if (username.trim() && password.trim()) {
-      try {
-        const response = await fetch('http://tu-backend-php/login.php', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ username, password }),
-        });
-        
-        const data = await response.json();
-        
-        if (data.success) {
-          navigate('/home');
-        } else {
-          alert(data.message || 'Error al iniciar sesión');
-        }
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Error de conexión');
-      }
+  const validate = () => {
+    let valid = true;
+    if (username.trim().length < 5) {
+      setUserError('El usuario debe tener al menos 5 caracteres');
+      valid = false;
     } else {
-      alert('Por favor ingresa usuario y contraseña');
+      setUserError('');
     }
+    if (password.length < 6) {
+      setPassError('La contraseña debe tener al menos 6 caracteres');
+      valid = false;
+    } else {
+      setPassError('');
+    }
+    return valid;
+  };
+
+  const handleLogin = async () => {
+    navigate('/app/home');
   };
 
   return (
@@ -57,6 +53,7 @@ const LoginPage = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
             />
+            {userError && <span className={styles.errorMsg}>{userError}</span>}
           </div>
 
           <div className={styles.inputGroup}>
@@ -67,10 +64,11 @@ const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {passError && <span className={styles.errorMsg}>{passError}</span>}
           </div>
 
           <button 
-            onClick={handleLogin} 
+            onClick={handleLogin}
             className={styles.loginButton}
           >
             <span className={styles.buttonLabel}>Iniciar Sesión</span>
@@ -80,13 +78,13 @@ const LoginPage = () => {
         <div className={styles.extraOptions}>
           <button 
             className={styles.forgotPassword}
-            onClick={() => navigate('/PasswordPage')}
+            onClick={() => alert('Función aún no disponible, contacta con soporte')}
           >
             ¿Olvidaste tu contraseña?
           </button>
           <button 
             className={styles.registerLink}
-            onClick={() => navigate('/SignUpPage')}
+            onClick={() => navigate('/app/signup')}
           >
             Crear una cuenta nueva
           </button>

@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from './HomePage.module.css';
-import userAvatar from '@assets/images/avatar.png';
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import styles from "./HomePage.module.css";
+import userAvatar from "@assets/images/avatar.png";
+import GlobalHeader from "../../components/ui/GlobalHeader";
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
+import { FaBook, FaHome, FaUser, FaQuestionCircle, FaSignOutAlt } from "react-icons/fa";
 
 const HomePage = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -14,44 +21,196 @@ const HomePage = () => {
     navigate(path);
   };
 
+  const handleLogout = () => {
+    setShowLogoutConfirm(true);
+    setIsMenuOpen(false);
+  };
+
+  const confirmLogout = () => {
+    setShowLogoutConfirm(false);
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate("/welcome");
+    }, 1500); // 1.5 segundos de carga
+  };
+
+  const cancelLogout = () => {
+    setShowLogoutConfirm(false);
+  };
+
   return (
-    <div className={styles.container}>
-      <div className={styles.spacer} />
-      
-      <header className={styles.header}>
-        <img src={userAvatar} alt="User avatar" className={styles.avatar} />
-        <h1 className={styles.welcomeText}>Bienvenido, Usuario</h1>
-        <button onClick={toggleMenu} className={styles.menuButton}>
-          <span className={styles.menuIcon}>☰</span>
-        </button>
-      </header>
+    <div className={styles.fullScreenWrapper}>
+      <GlobalHeader
+        username="Usuario"
+        avatarSrc={userAvatar}
+        onMenuClick={toggleMenu}
+      />
 
       {isMenuOpen && (
-        <div className={styles.menuOverlay} onClick={() => setIsMenuOpen(false)}>
-          <div className={styles.menuContainer} onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => navigateTo('/courses')} className={styles.menuItem}>
-              Cursos
-            </button>
-            <button onClick={() => navigateTo('/home')} className={styles.menuItem}>
+        <div
+          className={styles.menuOverlay}
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <div
+            className={styles.menuContainer}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className={styles.menuHeader}>
+              <img src={userAvatar} alt="avatar" className={styles.menuAvatar} />
+              <span className={styles.menuUsername}>Usuario</span>
+            </div>
+            <button
+              onClick={() => navigateTo("/app/home")}
+              className={styles.menuItem}
+            >
+              <FaHome className={styles.menuIcon} />
               Inicio
             </button>
-            <button onClick={() => navigateTo('/profile')} className={styles.menuItem}>
+            <button
+              onClick={() => navigateTo("/app/courses")}
+              className={styles.menuItem}
+            >
+              <FaBook className={styles.menuIcon} />
+              Cursos
+            </button>
+            <button
+              onClick={() => navigateTo("/app/profile")}
+              className={styles.menuItem}
+            >
+              <FaUser className={styles.menuIcon} />
               Perfil
             </button>
-            <button onClick={() => navigateTo('/help')} className={styles.menuItem}>
+            <button
+              onClick={() => navigateTo("/app/help")}
+              className={styles.menuItem}
+            >
+              <FaQuestionCircle className={styles.menuIcon} />
               Ayuda
+            </button>
+            <hr className={styles.menuDivider} />
+            <button
+              onClick={handleLogout}
+              className={`${styles.menuItem} ${styles.menuLogout}`}
+            >
+              <FaSignOutAlt className={styles.menuIcon} />
+              Cerrar sesión
             </button>
           </div>
         </div>
       )}
 
-      <div className={styles.progressContainer}>
-        <h2 className={styles.progressTitle}>Tu progreso en programación</h2>
-        <div className={styles.progressBar}>
-          <div className={styles.progressFill} style={{ width: '30%' }} />
+      {showLogoutConfirm && (
+        <div className={styles.confirmOverlay}>
+          <div className={styles.confirmBox}>
+            <label className={styles.confirmLabel}>
+              ¿Desea cerrar sesión?
+            </label>
+            <div className={styles.confirmButtons}>
+              <button
+                className={styles.confirmYes}
+                onClick={confirmLogout}
+              >
+                Sí
+              </button>
+              <button
+                className={styles.confirmNo}
+                onClick={cancelLogout}
+              >
+                No
+              </button>
+            </div>
+          </div>
         </div>
-        <p className={styles.progressText}>30% completado</p>
+      )}
+
+      {/* Pantalla de carga */}
+      {isLoading && (
+        <div className={styles.loadingOverlay}>
+          <div className={styles.loadingBox}>
+            <span className={styles.loadingText}>Cerrando sesión...</span>
+          </div>
+        </div>
+      )}
+
+      <div className={styles.mainContent}>
+        {/* Mensaje de bienvenida */}
+        <div className={styles.welcomeMessage}>
+          <h1 className={styles.welcomeTitle}>
+            ¡Bienvenido de nuevo, Usuario!
+          </h1>
+          <p className={styles.welcomeText}>
+            Aquí puedes ver tu progreso en los cursos y acceder a los que estás
+            cursando actualmente.
+          </p>
+        </div>
+
+        {/* Contenedor de cursos en progreso y progreso general */}
+        <div className={styles.topSection}>
+          <div className={styles.courseSection}>
+            <h2 className={styles.sectionTitle}>Cursos en progreso</h2>
+            <div className={styles.courseList}>
+              {[
+                { name: "JavaScript Avanzado", status: "En progreso" },
+                { name: "React Intermedio", status: "En progreso" },
+              ].map((course) => (
+                <div key={course.name} className={styles.courseItem}>
+                  <span className={styles.courseName}>{course.name}</span>
+                  <span className={styles.courseStatus}>{course.status}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.progressSection}>
+            <h2 className={styles.sectionTitle}>Tu progreso en programación</h2>
+            <div className={styles.circularProgressWrapper}>
+              <CircularProgressbar
+                value={30}
+                text={`${30}%`}
+                styles={buildStyles({
+                  textColor: "#052659",
+                  pathColor: "#3A86FF",
+                  trailColor: "#C1E8FF",
+                })}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Cursos completados debajo */}
+        <div className={styles.courseSection}>
+          <h2 className={styles.sectionTitle}>Cursos completados</h2>
+          <div className={styles.courseList}>
+            {[
+              { name: "React Básico", status: "Completado" },
+              { name: "HTML y CSS", status: "Completado" },
+            ].map((course) => (
+              <div key={course.name} className={styles.courseItem}>
+                <span className={styles.courseName}>{course.name}</span>
+                <span className={styles.courseStatus}>{course.status}</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
+
+      <nav className={styles.bottomNav}>
+        <button
+          className={`${styles.bottomNavItem} ${location.pathname === "/home" ? styles.active : ""}`}
+          onClick={() => navigate("/app/home")}
+        >
+          <FaHome style={{ marginBottom: 4 }} />
+          <span style={{ fontSize: "0.8rem", marginTop: 6 }}>Home</span>
+        </button>
+        <button
+          className={`${styles.bottomNavItem} ${location.pathname === "/profile" ? styles.active : ""}`}
+          onClick={() => navigate("/app/profile")}
+        >
+          <FaUser style={{ marginBottom: 4 }} />
+          <span style={{ fontSize: "0.8rem", marginTop: 6 }}>Profile</span>
+        </button>
+      </nav>
     </div>
   );
 };

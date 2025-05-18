@@ -47,8 +47,10 @@
 .responsiveWave {
   width: 100%;
   height: 100%;
+  max-height: none;
+  display: block;
   object-fit: cover;
-  object-position: bottom;
+  margin: 0 auto;
 }
 
 .mainContent {

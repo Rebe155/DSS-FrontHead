@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import styles from './ProfilePage.module.css';
-import Icon from '@components/ui/Icon';
-import userAvatar from '@assets/images/usuario.png';
+import avatarCheck from '@assets/images/Avatar-check.png';
+import { FaSearch, FaBook, FaHome, FaUser, FaQuestionCircle, FaBars, FaSignOutAlt } from 'react-icons/fa';
 
 const ProfilePage = () => {
   const [profile, setProfile] = useState({
@@ -12,7 +12,10 @@ const ProfilePage = () => {
     country: 'El Salvador'
   });
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,11 +29,43 @@ const ProfilePage = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
+  const navigateTo = (path) => {
+    setIsMenuOpen(false);
+    navigate(path);
+  };
+
+  const handleLogout = () => {
+    setIsMenuOpen(false);
+    setShowLogoutConfirm(true);
+  };
+
+  const confirmLogout = () => {
+    setShowLogoutConfirm(false);
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate("/welcome");
+    }, 1500);
+  };
+
+  const cancelLogout = () => {
+    setShowLogoutConfirm(false);
+  };
+
+  const isFormComplete = () => {
+    return (
+      profile.username.trim() !== '' &&
+      profile.email.trim() !== '' &&
+      profile.bio.trim() !== '' &&
+      profile.country.trim() !== ''
+    );
+  };
+
   return (
-    <div className={styles.container}>
+    <div className={styles.fullScreenWrapper}>
       <header className={styles.header}>
         <div className={styles.searchContainer}>
-          <Icon name="search" className={styles.searchIcon} />
+          <FaSearch className={styles.searchIcon} />
           <input
             type="text"
             placeholder="Buscar..."
@@ -38,17 +73,63 @@ const ProfilePage = () => {
           />
         </div>
         <button onClick={toggleMenu} className={styles.menuButton}>
-          <Icon name="menu" />
+          <FaBars />
         </button>
       </header>
 
       {isMenuOpen && (
-        <div className={styles.menuOverlay} onClick={() => setIsMenuOpen(false)}>
-          <div className={styles.menuContainer} onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => navigate('/courses')}>Cursos</button>
-            <button onClick={() => navigate('/home')}>Inicio</button>
-            <button onClick={() => navigate('/profile')}>Perfil</button>
-            <button onClick={() => navigate('/help')}>Ayuda</button>
+        <div className={styles.menuOverlay} onClick={toggleMenu}>
+          <div className={styles.menuContainer} onClick={e => e.stopPropagation()}>
+            <div className={styles.menuHeader}>
+              <img src={avatarCheck} alt="avatar" className={styles.menuAvatar} />
+              <span className={styles.menuUsername}>Menú</span>
+            </div>
+            <button onClick={() => navigateTo('/app/home')} className={styles.menuItem}>
+              <FaHome className={styles.menuIcon} />
+              Inicio
+            </button>
+            <button onClick={() => navigateTo('/app/courses')} className={styles.menuItem}>
+              <FaBook className={styles.menuIcon} />
+              Cursos
+            </button>
+            <button onClick={() => navigateTo('/app/profile')} className={styles.menuItem}>
+              <FaUser className={styles.menuIcon} />
+              Perfil
+            </button>
+            <button onClick={() => navigateTo('/app/help')} className={styles.menuItem}>
+              <FaQuestionCircle className={styles.menuIcon} />
+              Ayuda
+            </button>
+            <button onClick={handleLogout} className={styles.menuItem} style={{ color: '#e63946', fontWeight: 'bold' }}>
+              <FaSignOutAlt className={styles.menuIcon} />
+              Cerrar sesión
+            </button>
+          </div>
+        </div>
+      )}
+
+      {showLogoutConfirm && (
+        <div className={styles.confirmOverlay}>
+          <div className={styles.confirmBox}>
+            <label className={styles.confirmLabel}>
+              ¿Desea cerrar sesión?
+            </label>
+            <div className={styles.confirmButtons}>
+              <button className={styles.confirmYes} onClick={confirmLogout}>
+                Sí
+              </button>
+              <button className={styles.confirmNo} onClick={cancelLogout}>
+                No
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isLoading && (
+        <div className={styles.loadingOverlay}>
+          <div className={styles.loadingBox}>
+            <span className={styles.loadingText}>Cerrando sesión...</span>
           </div>
         </div>
       )}
@@ -57,7 +138,7 @@ const ProfilePage = () => {
         <h1 className={styles.title}>INFORMACIÓN PERSONAL</h1>
 
         <div className={styles.profileSection}>
-          <img src={userAvatar} alt="Perfil" className={styles.profileImage} />
+          <img src={avatarCheck} alt="Perfil" className={styles.profileImage} />
           <button className={styles.changePhotoBtn}>Cambiar foto</button>
         </div>
 
@@ -111,20 +192,31 @@ const ProfilePage = () => {
             </select>
           </label>
 
-          <button type="submit" className={styles.saveButton}>
+          <button
+            type="submit"
+            className={styles.saveButton}
+            disabled={!isFormComplete()}
+            style={{ opacity: isFormComplete() ? 1 : 0.5, cursor: isFormComplete() ? 'pointer' : 'not-allowed' }}
+          >
             Guardar cambios
           </button>
         </form>
       </main>
 
-      <nav className={styles.navBar}>
-        <button onClick={() => navigate('/home')} className={styles.navButton}>
-          <Icon name="home" />
-          <span>Inicio</span>
+      <nav className={styles.bottomNav}>
+        <button
+          className={`${styles.bottomNavItem} ${location.pathname === "/app/home" ? styles.active : ""}`}
+          onClick={() => navigate("/app/home")}
+        >
+          <FaHome style={{ marginBottom: 4 }} />
+          <span style={{ fontSize: "0.8rem", marginTop: 6 }}>Home</span>
         </button>
-        <button onClick={() => navigate('/profile')} className={styles.navButton}>
-          <Icon name="person" />
-          <span>Perfil</span>
+        <button
+          className={`${styles.bottomNavItem} ${location.pathname === "/app/profile" ? styles.active : ""}`}
+          onClick={() => navigate("/app/profile")}
+        >
+          <FaUser style={{ marginBottom: 4 }} />
+          <span style={{ fontSize: "0.8rem", marginTop: 6 }}>Profile</span>
         </button>
       </nav>
     </div>

@@ -10,10 +10,10 @@
   width: 100%;
   background-color: #B297F1;
   display: flex;
-  justify-content: space-between;
+  justify-content: center; /* Centra horizontalmente el contenido del header */
   align-items: center;
-  padding: 0 20px;
-  position: sticky;
+  position: relative;
+  padding: 16px 0;
   top: 0;
   z-index: 100;
 }
@@ -21,12 +21,14 @@
 .searchContainer {
   display: flex;
   align-items: center;
+  justify-content: center; /* Centra la barra de búsqueda */
+  width: 100%;
+  max-width: 400px; /* Ajusta el ancho máximo si lo deseas */
+  margin: 0 auto;
   background-color: rgba(255, 255, 255, 0.2);
   border-radius: 25px;
   padding: 0 15px;
   height: 40px;
-  flex: 1;
-  max-width: 500px;
 }
 
 .searchIcon {
@@ -41,6 +43,8 @@
   border: none;
   color: #FFFFFF;
   font-size: 1rem;
+  min-width: 250px; /* más largo */
+  width: 100%;
 }
 
 .searchInput::placeholder {
@@ -48,6 +52,10 @@
 }
 
 .menuButton {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
   background: none;
   border: none;
   color: #FFFFFF;
@@ -56,43 +64,115 @@
   cursor: pointer;
 }
 
+.fullScreenWrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(to bottom, #f5f7fa 0%, #e4e8eb 100%);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  z-index: 1;
+}
+
 .menuOverlay {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 200;
+  background: rgba(0, 0, 0, 0.35);
+  z-index: 1000;
   display: flex;
   justify-content: flex-end;
+  animation: fadeIn 0.2s;
+}
+
+@keyframes fadeIn {
+  from {
+    background: rgba(0, 0, 0, 0);
+  }
+  to {
+    background: rgba(0, 0, 0, 0.35);
+  }
 }
 
 .menuContainer {
-  width: 60%;
-  max-width: 250px;
-  background-color: #FFFFFF;
-  margin-top: 70px;
-  padding: 15px 0;
-  border-radius: 10px 0 0 10px;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  width: 260px;
+  max-width: 90vw;
+  background: #fff;
+  margin-top: 4.5rem;
+  margin-right: 1.5rem;
+  border-radius: 16px;
+  padding: 1.2rem 1rem 1rem 1rem;
+  box-shadow: 0 8px 32px rgba(58, 134, 255, 0.15), 0 1.5px 6px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-height: unset;
+  max-height: 340px;
+  justify-content: flex-start;
+  align-items: stretch;
+  animation: slideInMenu 0.25s;
 }
 
-.menuContainer button {
-  width: 100%;
-  padding: 15px 20px;
-  text-align: left;
-  background: none;
+@keyframes slideInMenu {
+  from {
+    transform: translateX(120%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.menuHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.menuAvatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #3A86FF;
+  margin-right: 0.5rem;
+}
+
+.menuUsername {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #052659;
+}
+
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.5rem;
   border: none;
+  background: none;
   font-size: 1rem;
   color: #052659;
-  font-weight: bold;
+  font-weight: 500;
+  border-radius: 7px;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background 0.18s, color 0.18s;
 }
 
-.menuContainer button:hover {
-  background-color: #F5F5F5;
+.menuItem:hover {
+  background: #eaf1ff;
+  color: #3A86FF;
+}
+
+.menuIcon {
+  font-size: 1.1rem;
+  color: #3A86FF;
 }
 
 .mainContent {
@@ -101,6 +181,7 @@
   max-width: 600px;
   margin: 0 auto;
   width: 100%;
+  padding-bottom: 90px; /* <-- Agrega esto para dejar espacio al menú inferior */
 }
 
 .title {
@@ -154,7 +235,9 @@
   color: #052659;
 }
 
-.input, .textarea, select {
+.input,
+.textarea,
+select {
   width: 100%;
   padding: 12px 15px;
   border: 1px solid #E0E0E0;
@@ -164,7 +247,9 @@
   transition: border-color 0.2s;
 }
 
-.input:focus, .textarea:focus, select:focus {
+.input:focus,
+.textarea:focus,
+select:focus {
   outline: none;
   border-color: #B297F1;
 }
@@ -215,26 +300,95 @@
   font-size: 0.8rem;
 }
 
+.navButton svg,
+.navButton .icon {
+  color: #B297F1 !important;
+  font-size: 1.6rem;
+}
+
 .navButton span {
   margin-top: 4px;
+}
+
+.bottomNav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100vw;
+  height: 56px;
+  background: #fff;
+  border-top: 1px solid #e4e8eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+  box-shadow: 0 -2px 12px rgba(58,134,255,0.06);
+  gap: 35rem;
+}
+
+.bottomNavItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 48px;
+  min-height: 36px;
+  font-size: 0.9rem;
+  color: #3A86FF;
+  font-weight: 500;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  transition: background 0.18s, color 0.18s;
+  border-radius: 8px;
+}
+
+.bottomNavItem svg {
+  font-size: 1.2rem;
+  margin-bottom: 2px;
+}
+
+/* Fuerza color negro en íconos y texto del menú inferior */
+.bottomNavItem,
+.bottomNavItem svg {
+  color: #111 !important;
+}
+
+.bottomNavItem.active,
+.bottomNavItem:hover {
+  color: #111 !important;
+  background: #eaf1ff;
+}
+
+.bottomNavItem.active svg,
+.bottomNavItem:hover svg {
+  color: #111 !important;
 }
 
 @media (max-width: 768px) {
   .header {
     padding: 0 15px;
   }
-  
+
   .menuContainer {
     width: 70%;
   }
-  
+
   .mainContent {
     padding: 15px;
   }
-  
+
   .profileImage {
     width: 100px;
     height: 100px;
+  }
+}
+
+@media (max-width: 600px) {
+  .mainContent {
+    padding-bottom: 160px; /* más espacio para el menú inferior */
   }
 }
 
@@ -242,12 +396,49 @@
   .header {
     height: 60px;
   }
-  
+
   .searchContainer {
     height: 35px;
   }
-  
+
   .title {
     font-size: 1.3rem;
   }
+}
+
+/* Estilos específicos para el menú */
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.5rem;
+  border: none;
+  background: none;
+  font-size: 1rem;
+  color: #052659;
+  font-weight: 500;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+}
+
+.menuItem:hover {
+  background: #eaf1ff;
+  color: #3A86FF;
+}
+
+.menuIcon {
+  font-size: 1.1rem;
+  color: #3A86FF;
+}
+
+/* Estilo para el botón de cerrar sesión */
+.menuItemLogout {
+  color: #e63946 !important;
+  font-weight: bold;
+}
+
+.menuItemLogout:hover {
+  background: #ffeef0;
+  color: #e63946 !important;
 }

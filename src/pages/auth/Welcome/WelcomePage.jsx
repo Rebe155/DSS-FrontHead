@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './WelcomePage.module.css';
-import wavesTop from '@assets/images/waves-top.png';
+import wavesTop from '@assets/images/1-Photoroom.png';
 import logo from '@assets/images/logo.png';
 import avatar from '@assets/images/avatar.png';
 
@@ -45,11 +45,9 @@ const WelcomePage = () => {
         </div>
 
         <div className={styles.socialContainer}>
-          {['google', 'github', 'microsoft'].map((icon) => (
-            <button key={icon} className={styles.socialButton}>
-              <i className={`fab fa-${icon}`}></i>
-            </button>
-          ))}
+          <button className={styles.socialButton}>
+            <i className="fab fa-google"></i>
+          </button>
         </div>
       </main>
     </div>

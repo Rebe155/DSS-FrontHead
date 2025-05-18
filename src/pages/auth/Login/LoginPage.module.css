@@ -141,6 +141,13 @@
   text-decoration: underline;
 }
 
+.errorMsg {
+  color: #e74c3c;
+  font-size: 0.95em;
+  margin-top: 4px;
+  display: block;
+}
+
 @media (orientation: landscape) and (max-height: 600px) {
   .loginContent {
     margin: 10px;

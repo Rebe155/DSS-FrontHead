@@ -17,6 +17,7 @@ import CodePage from '@pages/auth/PasswordReset/CodePage';
 import PythonIntroPage from '@pages/languages/python/PythonIntroPage';
 import PythonTheoryPage from '@pages/languages/python/PythonTheoryPage';
 import PythonExercisesPage from '@pages/languages/python/PythonExercisesPage';
+import IntroHTMLCourse from '@pages/courses/introduction/IntroHTMLCourse';
 
 const App = () => {
   return (
@@ -39,6 +40,15 @@ const App = () => {
             <Route path="python/intro" element={<PythonIntroPage />} />
             <Route path="python/theory" element={<PythonTheoryPage />} />
             <Route path="python/exercises" element={<PythonExercisesPage />} />
+            <Route path="/app/courses/introduction/html" element={<IntroHTMLCourse />} />
+
+            {/* RUTAS PARA /app/ */}
+            <Route path="app">
+              <Route path="courses" element={<CoursesPage />} />
+              <Route path="home" element={<HomePage />} />
+              <Route path="profile" element={<ProfilePage />} />
+              <Route path="help" element={<HelpPage />} />
+            </Route>
           </Route>
         </Routes>
       </BrowserRouter>

@@ -9,30 +9,44 @@ const SignUpPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
-  const handleSignUp = async () => {
-    if (!username.trim() || !email.trim() || !password.trim() || !confirmPassword.trim()) {
-      alert('Por favor llena todos los campos');
-      return;
+  const validate = () => {
+    const newErrors = {};
+    if (!username.trim() || username.trim().length < 5) {
+      newErrors.username = 'El usuario debe tener al menos 5 caracteres';
+    }
+    if (!email.trim() || !/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/.test(email)) {
+      newErrors.email = 'Ingresa un correo electrónico válido';
+    }
+    if (!password || password.length < 6) {
+      newErrors.password = 'La contraseña debe tener al menos 6 caracteres';
     }
     if (password !== confirmPassword) {
-      alert('Las contraseñas no coinciden');
-      return;
+      newErrors.confirmPassword = 'Las contraseñas no coinciden';
     }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSignUp = async () => {
+    if (!validate()) return;
 
     try {
-      const response = await fetch('http://tu-backend-php/signup.php', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, email, password }),
-      });
+      // Simula una respuesta exitosa del backend
+      // const response = await fetch('http://tu-backend-php/signup.php', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ username, email, password }),
+      // });
 
-      const data = await response.json();
+      // const data = await response.json();
+      const data = { success: true }; 
 
       if (data.success) {
         alert('Registro exitoso. Ahora inicia sesión.');
-        navigate('/login');
+        navigate('/app/home'); 
       } else {
         alert(data.message || 'Error al registrarse');
       }
@@ -63,6 +77,7 @@ const SignUpPage = () => {
               value={username}
               onChange={e => setUsername(e.target.value)}
             />
+            {errors.username && <span className={styles.errorMsg}>{errors.username}</span>}
           </div>
 
           <div className={styles.inputGroup}>
@@ -73,6 +88,7 @@ const SignUpPage = () => {
               value={email}
               onChange={e => setEmail(e.target.value)}
             />
+            {errors.email && <span className={styles.errorMsg}>{errors.email}</span>}
           </div>
 
           <div className={styles.inputGroup}>
@@ -83,6 +99,7 @@ const SignUpPage = () => {
               value={password}
               onChange={e => setPassword(e.target.value)}
             />
+            {errors.password && <span className={styles.errorMsg}>{errors.password}</span>}
           </div>
 
           <div className={styles.inputGroup}>
@@ -93,6 +110,7 @@ const SignUpPage = () => {
               value={confirmPassword}
               onChange={e => setConfirmPassword(e.target.value)}
             />
+            {errors.confirmPassword && <span className={styles.errorMsg}>{errors.confirmPassword}</span>}
           </div>
 
           <button onClick={handleSignUp} className={styles.signupButton}>
@@ -103,7 +121,7 @@ const SignUpPage = () => {
         <div className={styles.extraOptions}>
           <button
             className={styles.loginLink}
-            onClick={() => navigate('/login')}
+            onClick={() => navigate('/app/login')}
           >
             ¿Ya tienes una cuenta? Inicia sesión
           </button>
