@@ -367,6 +367,52 @@ select:focus {
   color: #111 !important;
 }
 
+.confirmOverlay, .loadingOverlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.confirmBox, .loadingBox {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  min-width: 250px;
+}
+.confirmLabel {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+.confirmButtons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 1rem;
+}
+.confirmYes, .confirmNo {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+.confirmYes {
+  background: #3A86FF;
+  color: #fff;
+}
+.confirmNo {
+  background: #ccc;
+  color: #333;
+}
+.loadingText {
+  font-size: 1.2rem;
+  color: #3A86FF;
+}
+
 @media (max-width: 768px) {
   .header {
     padding: 0 15px;

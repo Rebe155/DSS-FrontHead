@@ -34,15 +34,13 @@ const SignUpPage = () => {
     if (!validate()) return;
 
     try {
-      // Simula una respuesta exitosa del backend
-      // const response = await fetch('http://tu-backend-php/signup.php', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ username, email, password }),
-      // });
+      const response = await fetch('http://localhost/ProgPracticeBackend/signup.php', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ username, email, password }),
+});
 
-      // const data = await response.json();
-      const data = { success: true }; 
+const data = await response.json();
 
       if (data.success) {
         alert('Registro exitoso. Ahora inicia sesión.');
