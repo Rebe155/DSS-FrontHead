@@ -1,0 +1,73 @@
+.container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.headerWave {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: -1;
+}
+
+.backButton {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #2c3e50;
+  margin-bottom: 2rem;
+  cursor: pointer;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.title {
+  color: #2c3e50;
+  margin-bottom: 1rem;
+}
+
+.description {
+  color: #7f8c8d;
+  margin-bottom: 2rem;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  background-size: cover;
+  position: relative;
+  overflow: hidden;
+}
+
+.buttonText {
+  position: relative;
+  z-index: 1;
+}
