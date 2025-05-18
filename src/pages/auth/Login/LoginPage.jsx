@@ -29,26 +29,34 @@ const LoginPage = () => {
   };
 
   const handleLogin = async () => {
-    if (!validate()) return;
-    try {
-      const response = await fetch('http://localhost/ProgPracticeBackend/login.php', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ username, password }),
-});
+  if (!validate()) return;
 
-      const data = await response.json();
-      if (data.success) {
-        // Guardar usuario en localStorage o context
-        navigate('/app/home');
-      } else {
-        setUserError(data.message);
-      }
-    } catch (err) {
-  console.error('Error de conexión:', err);
-  setUserError('Error de conexión');
-}
-  };
+  try {
+    const response = await fetch('http://localhost/ProgPracticeBackend/login.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+      // 🔐 Guarda el ID del usuario en localStorage
+      localStorage.setItem("user_id", data.user.id);
+
+      // Puedes guardar más si quieres:
+      localStorage.setItem("username", data.user.username);
+
+      // 🔁 Redirige al Home
+      navigate('/app/home');
+    } else {
+      setUserError(data.message);
+    }
+  } catch (err) {
+    setUserError('Error de conexión');
+  }
+};
+
 
   return (
     <div className={styles.fullScreenContainer}>
